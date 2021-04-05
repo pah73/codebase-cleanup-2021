@@ -1,51 +1,62 @@
 
 from random import choice
 
-#
-# USER SELECTION
-#
-
-
-
 VALID_OPTIONS = ["rock", "paper", "scissors"]
 
-u = input("Please choose one of 'Rock', 'Paper', or 'Scissors': ").lower()
-print("USER CHOICE:", u)
-if u not in VALID_OPTIONS:
-    print("OOPS, TRY AGAIN")
-    exit()
+def determine_winner(choice1,choice2):
+    """
+    Params : 
+        choice1 and choice 2 are both string : either "rock", "paper", or "scissors"
+    """
+    winners = {
+        "rock":{
+            "rock": None, #represents a tie
+            "paper": "paper",
+            "scissors":"rock",
+        },
+        "paper":{
+            "rock": "paper",
+            "paper": None, #represents a tie
+            "scissors":"scissors",
+        },
+        "scissors":{
+            "rock": "rock",
+            "paper":"scissors",
+            "scissors": None, #represents a tie
+        },
+    }
+    winning_choice = winners[choice1][choice2]
+    return winning_choice
+    
 
-#
-# COMPUTER SELECTION
-#
+if __name__ == "__main__":
+    
+    #
+    # USER SELECTION
+    #
 
-c = choice(VALID_OPTIONS)
-print("COMPUTER CHOICE:", c)
+    u = input("Please choose one of 'Rock', 'Paper', or 'Scissors': ").lower()
+    print("USER CHOICE:", u)
+    if u not in VALID_OPTIONS:
+        print("OOPS, TRY AGAIN")
+        exit()
 
-#
-# DETERMINATION OF WINNER
-#
+    #
+    # COMPUTER SELECTION
+    #
 
-if u=="rock":
-    if c=="rock":
-        print("It's a tie!")
-    elif c=="paper":
-        print("The computer wins")
-    if c=="scissors":
-        print("The user wins")
-elif u=="paper":
-    if c=="rock":
-        print("The user wins")
-    elif c=="paper":
-        print("It's a tie!")
-    elif c=="scissors":
-        print("The computer wins")
-elif u=="scissors":
-    if c=="rock":
-        print("The computer wins")
-    elif c=="paper":
-        print("The user wins")
-    elif c=="scissors":
-        print("It's a tie!")
+    c = choice(VALID_OPTIONS)
+    print("COMPUTER CHOICE:", c)
 
+    #
+    # DETERMINATION OF WINNER
+    #
 
+    winner = determine_winner(u, c)
+    
+    if winner == u:
+        print("YOU WON!")
+    elif winner == c:
+        print("COMPUTER WON!")
+    elif winner == None:
+        print("TIE!")
